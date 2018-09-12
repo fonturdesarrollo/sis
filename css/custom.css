@@ -1,0 +1,110 @@
+header {
+   
+    background-repeat: no-repeat;
+    background: url(../imagenes/cintillo.jpg) no-repeat center center;
+    background-size: 100% 100%;
+    height:80px;
+    width:80%;
+    z-index:100;
+    display:block;
+}
+
+header h2{
+	font-size:28px;
+	font-weight:normal;
+	left:15%;
+	position:absolute;
+	top: 19.5%;
+	padding-top: 10px;
+	padding-right: 0;
+	padding-bottom: 10px;
+	padding-left: 0;
+	height: 32px;
+}
+header h3{
+	color: #FFF;
+	font-size:24px;
+	font-weight:normal;
+	left:48%;
+	position:absolute;
+	top: 19.5%;
+	padding-top: 10px;
+	padding-right: 0;
+	padding-bottom: 10px;
+	padding-left: 0;
+	height: 32px;
+}
+
+
+
+.navbar-default {
+  background-color: #F00;
+  border-color: #000;
+}
+.navbar-default .navbar-brand {
+  color: #FFF;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #ecdbff;
+}
+.navbar-default .navbar-text {
+  color: #FFF;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #FFF;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #000;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #FFF;
+  background-color: #000;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #FFF;
+  background-color: #000;
+}
+.navbar-default .navbar-toggle {
+  border-color: #000;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #000;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #FFF;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #FFF;
+}
+.navbar-default .navbar-link {
+  color: #FFF;
+}
+.navbar-default .navbar-link:hover {
+  color: #FFF;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #FFF;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #FFF;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #FFF;
+    background-color:#FFF;
+  }
+}
+
+

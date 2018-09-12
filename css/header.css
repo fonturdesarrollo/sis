@@ -1,0 +1,8 @@
+body, html {
+	width:auto;
+    height: auto;
+    background-repeat: no-repeat;
+    background: url(../img/fondo-cedil.jpg) no-repeat center center;
+    background-size: 100% 100%;
+}
+
