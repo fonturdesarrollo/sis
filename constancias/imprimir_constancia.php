@@ -8,7 +8,8 @@ require('../fpdf17/fpdf.php');
 class PDF extends FPDF
 {
     function Header(){
-        $this->Image('../imagenes/cintillo_nuevo.png',20,10,168,20);
+        //$this->Image('../imagenes/cintillo_nuevo.png',20,10,168,20);
+		$this->Image('../imagenes/cintillo_nuevo.png',20,10,168,15);
     }
     function Footer(){
         $this->SetY(-20);
@@ -48,7 +49,7 @@ $pdf->AddPage('P','Letter');
 $pdf->SetMargins(20,20,20);
 $pdf->SetFont('Arial','',11);
 $pdf->Image('../imagenes/FirmaDigitalCarnet.png',68,185,75,45,'PNG');
-/*$pdf->Image('../imagenes/logo_mision.jpg',158,268,30,10,'JPG');*/
+//*$pdf->Image('../imagenes/logo_mision.jpg',158,268,30,10,'JPG');*/
 $pdf->Cell(168,30,'',0,1,'C');
 $pdf->Cell(84,5,utf8_decode($_SESSION['correlativo1'])."-".date('Y'),0,0,'L');
 $pdf->Cell(84,5,$_SESSION['lugar'].", ".$_SESSION['fechaahora'],0,1,'R');
@@ -66,10 +67,12 @@ if($_SESSION['nomina']=="fijos"){
 }
 if ($_SESSION['cargo']!=''){
     //$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, Gerente (E) de Recursos Humanos de la '.$_SESSION['institucion'].', '.$_SESSION['nacgerente'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' labora en esta Fundación, desde el '.$_SESSION['fechaingreso'].', actualmente cumple funciones de '.$_SESSION['cargo'].', adscrita (o) a la '.strtoupper($_SESSION['gerencia']).', devengando una remuneración mensual de:'),0,'J');
-	$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, '.$_SESSION['nacgerente'].' Gerente de la Oficina de Gestión Humana de la '.$_SESSION['institucion'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' labora en esta Fundación, desde el '.$_SESSION['fechaingreso'].', '.$texto.' '.$_SESSION['cargo'].', adscrita (o) a la '.strtoupper($_SESSION['gerencia']).', devengando una remuneración mensual de:'),0,'J');
+	//$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, '.$_SESSION['nacgerente'].' Gerente de la Oficina de Gestión Humana de la '.$_SESSION['institucion'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' labora en esta Fundación, desde el '.$_SESSION['fechaingreso'].', '.$texto.' '.$_SESSION['cargo'].', adscrita (o) a la '.strtoupper($_SESSION['gerencia']).', devengando una remuneración mensual de:'),0,'J');
+	$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, '.$_SESSION['nacgerente'].' Gerente (E) de la Oficina de Gestión Humana de la '.$_SESSION['institucion'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' labora en esta Fundación, desde el '.$_SESSION['fechaingreso'].', '.$texto.' '.$_SESSION['cargo'].', adscrita (o) a la '.strtoupper($_SESSION['gerencia']).', devengando una remuneración mensual de:'),0,'J');
 }else {
     //$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, Gerente (E) de Recursos Humanos de la '.$_SESSION['institucion'].', '.$_SESSION['nacgerente'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' labora en esta Fundación, desde el '.$_SESSION['fechaingreso'].', en condición de CONTRATADO, adscrita (o) a la '.strtoupper($_SESSION['gerencia']).', devengando una remuneración mensual de:'),0,'J');
-	$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, '.$_SESSION['nacgerente'].' Gerente de la Oficina de Gestión Humana de la '.$_SESSION['institucion'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' labora en esta Fundación, desde el '.$_SESSION['fechaingreso'].', en condición de CONTRATADO, adscrita (o) a la '.strtoupper($_SESSION['gerencia']).', devengando una remuneración mensual de:'),0,'J');
+	//$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, '.$_SESSION['nacgerente'].' Gerente de la Oficina de Gestión Humana de la '.$_SESSION['institucion'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' labora en esta Fundación, desde el '.$_SESSION['fechaingreso'].', en condición de CONTRATADO, adscrita (o) a la '.strtoupper($_SESSION['gerencia']).', devengando una remuneración mensual de:'),0,'J');
+	$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, '.$_SESSION['nacgerente'].' Gerente (E) de la Oficina de Gestión Humana de la '.$_SESSION['institucion'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' labora en esta Fundación, desde el '.$_SESSION['fechaingreso'].', en condición de CONTRATADO, adscrita (o) a la '.strtoupper($_SESSION['gerencia']).', devengando una remuneración mensual de:'),0,'J');
 
 }
 $pdf->Cell(168,5,'',0,1,'C');
@@ -107,10 +110,10 @@ $pdf->Cell(168,8,'',0,1,'C');
 $pdf->Cell(168,8,'',0,1,'C');
 $pdf->SetFont('Arial','B',11);
 $pdf->Cell(168,5,utf8_decode($_SESSION['nyagerente']),0,1,'C');
-$pdf->Cell(168,5,utf8_decode('GERENTE DE LA OFICINA DE GESTION HUMANA'),0,1,'C');
+$pdf->Cell(168,5,utf8_decode('GERENTE (E) DE LA OFICINA DE GESTIÓN HUMANA'),0,1,'C');
 $pdf->SetFont('Arial','',8);
-$pdf->Cell(168,3,utf8_decode('Designada mediante Punto de Cuenta No. 208 de fecha veintiséis (26) de agosto de 2016'),0,1,'C');
-$pdf->Cell(168,3,utf8_decode('y oficio de Notificación No.PRE/O/214 de fecha catorce (14) de diciembre de 2016.'),0,1,'C');
+$pdf->Cell(168,3,utf8_decode('Designada mediante Punto de Cuenta N° 313 de fecha quince (15) de octubre de 2018'),0,1,'C');
+$pdf->Cell(168,3,utf8_decode('y Oficio de Notificación N° PRE/O/498 de fecha quince (15) de octubre de 2018.'),0,1,'C');
 $pdf->SetFont('Arial','',11);
 $pdf->Cell(56,5,"PF/ep.",0,0,'L');$pdf->SetFont('Arial','B',8);$pdf->Cell(56,5,utf8_decode($_SESSION['lema']),0,0,'C');$pdf->Cell(56,5,'',0,1,'R');
 $pdf->Cell(168,5,'',0,1,'C');
