@@ -27,5 +27,5 @@
 	$rif='Rif: G-20006289-4';
 	$institucion2='FUNDACION FONDO NACIONAL DE TRANSPORTE URBANO';
 	$direccioninstitucion='Av. Los Jabillos. Edf. FONTUR, Sabana Grande. Caracas - Venezuela';
-	$contacto='Máster (0212)707.02.77 -/fax. 707.0283 e-mail: fontur@fontur.gov.ve - http://www.fontur.gob.ve';
+	$contacto='Máster (0212)707.02.77 -/fax. 707.0283 e-mail: fontur@fontur.gob.ve - http://www.fontur.gob.ve';
 ?>

@@ -77,7 +77,7 @@
 <nav class="navbar navbar-default">
  <div class="container-fluid">
  <marquee direction="left" scrollamount="10">
-<font color="#FFFFFF" face="Starduster Expanded Italic" size="8">“El amor por la patria, si es verdadero, a uno lo lleva, incluso si es necesario, a dar la vida misma por ella, porque la vida nuestra es transitoria; la de la patria debe ser eterna y tiene que ser una patria grande, hermosa, libre, desarrollada”. Hugo Chavez</font>
+<font color="#FFFFFF" face="Starduster Expanded Italic" size="8"></font>
 </marquee>	
 </div><!-- /.navbar-collapse --> 
 </nav>

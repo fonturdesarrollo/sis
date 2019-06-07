@@ -22,6 +22,7 @@ $_SESSION['bonoalimentacion']=consulta_pgsql_val1("bono_alimentacion", "constanc
 $_SESSION['primatransporte']=consulta_pgsql_val1("primatransporte", "constancias", $_POST['codigo']);
 $_SESSION['hash']=consulta_pgsql_val1("hash", "constancias", $_POST['codigo']);
 $_SESSION['nomina']=consulta_pgsql_val1("nomina", "constancias", $_POST['codigo']);
+$_SESSION['primaporhijo']=consulta_pgsql_val1("prima_hijo", "constancias", $_POST['codigo']);
 $fecha_solicitud =consulta_pgsql_val1("fecha_solicitud", "constancias", $_POST['codigo']);
 $fecha = explode("-",$fecha_solicitud);
 $fecha[0]=$año;

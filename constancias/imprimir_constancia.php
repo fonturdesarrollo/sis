@@ -39,16 +39,24 @@ if($_SESSION['primatransporte']==''||$_SESSION['primatransporte']=='0,00'||$_SES
 if($_SESSION['primaporhijo']==''||$_SESSION['primaporhijo']=='0,00'||$_SESSION['primaporhijo']=='0'){
 	$i++;
 }
-$var1=9-$i;
-$var2=56/$var1;
-
+if ($i<6){
+    $var1=9-$i;
+    $var2=56/$var1;  
+    
+} else {
+    $var2=9.5;
+}
 // Creación del objeto de la clase heredada
 $pdf = new PDF();
 $pdf->AliasNbPages();
 $pdf->AddPage('P','Letter');
 $pdf->SetMargins(20,20,20);
 $pdf->SetFont('Arial','',11);
-$pdf->Image('../imagenes/FirmaDigitalCarnet.png',68,185,75,45,'PNG');
+if ($i<6){
+    $pdf->Image('../imagenes/FirmaDigitalCarnet.png',68,185,75,45,'PNG');
+} else {
+    $pdf->Image('../imagenes/FirmaDigitalCarnet.png',68,160,75,45,'PNG'); 
+}
 //*$pdf->Image('../imagenes/logo_mision.jpg',158,268,30,10,'JPG');*/
 $pdf->Cell(168,30,'',0,1,'C');
 $pdf->Cell(84,5,utf8_decode($_SESSION['correlativo1'])."-".date('Y'),0,0,'L');
@@ -60,7 +68,7 @@ $pdf->Cell(168,5,utf8_decode($_SESSION['destino']),0,1,'L');
 $pdf->SetFont('Arial','',11);
 $pdf->Cell(168,5,'Presente.-',0,1,'L');
 $pdf->Cell(168,5,'',0,1,'C');
-if($_SESSION['nomina']=="fijos"){
+if ($_SESSION['nomina']=="fijos" or $_SESSION['nomina']=="nuevo_circo"){
 	$texto="quien ocupa el cargo de";
 }else{
 	$texto="quien se desempeña como";
@@ -80,25 +88,25 @@ $pdf->Cell(168,5,'',0,1,'C');
 $pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,'Sueldo Base:',1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['sueldobase'],1,1,'R');
 if($_SESSION['diferenciamensual']!=''&&$_SESSION['diferenciamensual']!='0,00'&&$_SESSION['diferenciamensual']!='0'){
 	$pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Diferencia de Sueldo:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['diferenciamensual'],1,1,'R');
-}
+} 
 if($_SESSION['primajerarquia']!=''&&$_SESSION['primajerarquia']!='0,00'&&$_SESSION['primajerarquia']!='0'){
 	$pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Prima de Jerarquía:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['primajerarquia'],1,1,'R');
-}
+} 
 if($_SESSION['primaantiguedad']!=''&&$_SESSION['primaantiguedad']!='0,00'&&$_SESSION['primaantiguedad']!='0'){
 	$pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Prima de Antigüedad:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['primaantiguedad'],1,1,'R');
 }
 if($_SESSION['primaprofesional']!=''&&$_SESSION['primaprofesional']!='0,00'&&$_SESSION['primaprofesional']!='0'){
 	$pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Prima de Profesional:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['primaprofesional'],1,1,'R');
-}
+} 
 if($_SESSION['primahogar']!=''&&$_SESSION['primahogar']!='0,00'&&$_SESSION['primahogar']!='0'){
 	$pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Prima Hogar:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['primahogar'],1,1,'R');
-}
+} 
 if($_SESSION['primatransporte']!=''&&$_SESSION['primatransporte']!='0,00'&&$_SESSION['primatransporte']!='0'){
 	$pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Prima Transporte:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['primatransporte'],1,1,'R');
 }
 if($_SESSION['primaporhijo']!=''&&$_SESSION['primaporhijo']!='0,00'&&$_SESSION['primaporhijo']!='0'){
 	$pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Prima por Hijo:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['primaporhijo'],1,1,'R');
-}
+} 
 $pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Sueldo Total:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['sueldototal'],1,1,'R');
 $pdf->Cell(168,5,'',0,1,'C');
 $pdf->SetFont('Arial','B',11);$pdf->Cell(168,7,utf8_decode('Beneficio Social de Caracter  No Remunerativo'),0,1,'L');
@@ -115,7 +123,7 @@ $pdf->SetFont('Arial','',8);
 $pdf->Cell(168,3,utf8_decode('Designada mediante Punto de Cuenta N° 313 de fecha quince (15) de octubre de 2018'),0,1,'C');
 $pdf->Cell(168,3,utf8_decode('y Oficio de Notificación N° PRE/O/498 de fecha quince (15) de octubre de 2018.'),0,1,'C');
 $pdf->SetFont('Arial','',11);
-$pdf->Cell(56,5,"PF/ep.",0,0,'L');$pdf->SetFont('Arial','B',8);$pdf->Cell(56,5,utf8_decode($_SESSION['lema']),0,0,'C');$pdf->Cell(56,5,'',0,1,'R');
+$pdf->Cell(56,5,"LC/EP.",0,0,'L');$pdf->SetFont('Arial','B',8);$pdf->Cell(56,5,utf8_decode($_SESSION['lema']),0,0,'C');$pdf->Cell(56,5,'',0,1,'R');
 $pdf->Cell(168,5,'',0,1,'C');
 $pdf->SetFont('Arial','BI',9);
 $pdf->Cell(168,3,utf8_decode($_SESSION['rif']),0,1,'C');

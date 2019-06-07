@@ -1,7 +1,8 @@
 header {
    
     background-repeat: no-repeat;
-    background: url(../imagenes/cintillo.jpg) no-repeat center center;
+    /*background: url(../imagenes/cintillo.jpg) no-repeat center center;*/
+	background: url(../imagenes/cintillo.png) no-repeat center center;
     background-size: 100% 100%;
     height:80px;
     width:80%;

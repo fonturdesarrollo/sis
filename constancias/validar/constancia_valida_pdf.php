@@ -37,8 +37,13 @@ if($_SESSION['primatransporte']==''||$_SESSION['primatransporte']=='0,00'||$_SES
 if($_SESSION['primaporhijo']==''||$_SESSION['primaporhijo']=='0,00'||$_SESSION['primaporhijo']=='0'){
 	$i++;
 }
-$var1=9-$i;
-$var2=56/$var1;
+if ($i<6){
+    $var1=9-$i;
+    $var2=56/$var1;  
+    
+} else {
+    $var2=9.5;
+}
 
 // Creación del objeto de la clase heredada
 $pdf = new PDF();
@@ -47,7 +52,12 @@ $pdf->AddPage('P','Letter');
 $pdf->SetMargins(20,20,20);
 $pdf->SetFont('Arial','',11);
 //$pdf->Image('../../imagenes/FirmaDigitalCarnet.png',67,192,75,45,'PNG');
-$pdf->Image('../../imagenes/FirmaDigitalCarnet.png',68,185,75,45,'PNG');
+if ($i<6){
+    $pdf->Image('../../imagenes/FirmaDigitalCarnet.png',68,185,75,45,'PNG');
+} else {
+    $pdf->Image('../../imagenes/FirmaDigitalCarnet.png',68,160,75,45,'PNG');
+}
+
 //$pdf->Image('../../imagenes/Mision.jpg',158,268,30,10,'JPG');
 $pdf->Cell(168,30,'',0,1,'C');
 $pdf->Cell(84,5,utf8_decode($_SESSION['correlativo1'])."-".date('Y'),0,0,'L');
@@ -113,7 +123,7 @@ $pdf->Cell(168,3,utf8_decode('Designada mediante Punto de Cuenta N° 313 de fech
 $pdf->Cell(168,3,utf8_decode('y Oficio de Notificación N° PRE/O/498 de fecha quince (15) de octubre de 2018.'),0,1,'C');
 //$pdf->Cell(56,5,utf8_decode($_SESSION['correlativo2']),0,0,'L');$pdf->SetFont('Arial','B',8);$pdf->Cell(56,5,utf8_decode($_SESSION['lema']),0,0,'C');$pdf->Cell(56,5,'',0,1,'R');
 $pdf->SetFont('Arial','',11);
-$pdf->Cell(56,5,"PF/ep.",0,0,'L');$pdf->SetFont('Arial','B',8);$pdf->Cell(56,5,utf8_decode($_SESSION['lema']),0,0,'C');$pdf->Cell(56,5,'',0,1,'R');
+$pdf->Cell(56,5,"LC/EP.",0,0,'L');$pdf->SetFont('Arial','B',8);$pdf->Cell(56,5,utf8_decode($_SESSION['lema']),0,0,'C');$pdf->Cell(56,5,'',0,1,'R');
 $pdf->Cell(168,5,'',0,1,'C');
 $pdf->SetFont('Arial','BI',9);
 $pdf->Cell(168,3,utf8_decode($_SESSION['rif']),0,1,'C');
