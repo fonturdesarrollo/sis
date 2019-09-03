@@ -10,7 +10,7 @@
 	//$nacgerente='RAINER JOSE BRICEÑO LA ROSA'; //02082013
     //$nacgerente='YAIRI ZULEIMA LEON';
 	//$nacgerente='LIC. MARLA MUÑOZ OLIVO Cedula V-5.890.991';
-	$nacgerente='YENIRE ARIAS CABALLERO V- 19.555.132';
+	$nacgerente='ROSELIN NEGRON V- 12.260.911';
 	$unidadtributaria=107;
 	$calculobonoalimentacion=($unidadtributaria/2)*31;
 	$bonoalimentacion=number_format($calculobonoalimentacion, 2, ',', '.');
@@ -21,7 +21,7 @@
 	//$nyagerente='RAINER BRICEÑO';
 	//$nyagerente='YAIRI LEON';
 	//$nyagerente='LIC. MARLA MUÑOZ OLIVO';
-	$nyagerente='YENIRE ARIAS CABALLERO';
+	$nyagerente='ROSELIN NEGRON';
     //$lema='"Independencia y Patria Socialista... ¡Viviremos y Venceremos!"';
 	$lema=' ';
 	$rif='Rif: G-20006289-4';

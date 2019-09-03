@@ -40,42 +40,41 @@
 	}else{
 		header('Location: ingreso.php');
 	}
-	
 	if(pre_consulta_pgsql('accion_centralizada', $ci, $cuenta)!=0){
 		$nomina='accion_centralizada';
 		$tabla='accion_centralizada';
 	}else if(pre_consulta_pgsql('accion_centralizada', number_format($ci,0,"","."), $cuenta)!=0){
 		$nomina='accion_centralizada';
 		$tabla='accion_centralizada';
-		$ci=number_format($ci,0,"",".");   	
+		$ci=number_format($ci,0,"",".");
 	}else if(pre_consulta_pgsql('fijos', $ci, $cuenta)!=0){
 		$nomina='fijos';
 		$tabla='fijos';
 	}else if(pre_consulta_pgsql('fijos', number_format($ci,0,"","."), $cuenta)!=0){
 		$nomina='fijos';
 		$tabla='fijos';
-		$ci=number_format($ci,0,"",".");	
+		$ci=number_format($ci,0,"",".");
 	}else if(pre_consulta_pgsql('nuevo_circo', $ci, $cuenta)!=0){
 		$nomina='nuevo_circo';
 		$tabla='nuevo_circo';
 	}else if(pre_consulta_pgsql('nuevo_circo', number_format($ci,0,"","."), $cuenta)!=0){
 		$nomina='nuevo_circo';
 		$tabla='nuevo_circo';
-		$ci=number_format($ci,0,"",".");	
+		$ci=number_format($ci,0,"",".");
 	}else if(pre_consulta_pgsql('pasaje_estudiantil', $ci, $cuenta)!=0){
 		$nomina='pasaje_estudiantil';
 		$tabla='pasaje_estudiantil';
 	}else if(pre_consulta_pgsql('pasaje_estudiantil', number_format($ci,0,"","."), $cuenta)!=0){
 		$nomina='pasaje_estudiantil';
 		$tabla='pasaje_estudiantil';
-		$ci=number_format($ci,0,"",".");	
+		$ci=number_format($ci,0,"",".");
 	}else if(pre_consulta_pgsql('peaje', $ci, $cuenta)!=0){
 		$nomina='peaje';
 		$tabla='peaje';
 	}else if(pre_consulta_pgsql('peaje', number_format($ci,0,"","."), $cuenta)!=0){
-		$nomina='peaje';
+                $nomina='peaje';
 		$tabla='peaje';
-		$ci=number_format($ci,0,"",".");	
+		$ci=number_format($ci,0,"",".");
 	}else if(pre_consulta_pgsql('mision_transporte', $ci, $cuenta)!=0){
 		$nomina='mision_transporte';
 		$tabla='mision_transporte';
@@ -83,10 +82,12 @@
 		$nomina='mision_transporte';
 		$tabla='mision_transporte';
 		$ci=number_format($ci,0,"",".");
-	}else{
-		echo '<META HTTP-EQUIV="Refresh" Content="0; URL=ingreso.php?error=rne">';
-	}
-	$_SESSION['correlativo1']=$correlativo1;
+	} else {
+                echo '<meta http-equiv="refresh" content="0; url=ingreso.php?error=rne" />';
+                exit;
+        }
+
+        $_SESSION['correlativo1']=$correlativo1;
 	$_SESSION['lugar']=$lugar; // CONSTANTE
 	$_SESSION['fechaahora']=$fechaahora; // CONSTANTE
 	$_SESSION['destino']=$destino;

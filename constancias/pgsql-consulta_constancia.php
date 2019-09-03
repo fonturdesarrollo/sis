@@ -17,7 +17,7 @@
 		$result = pg_query($conn, "SELECT * FROM ".$nomina." WHERE \"CÉDULA DE IDENTIDAD\"='".$ci."' AND \"NUMERO DE CUENTA DEL TRABAJADOR\"='".$cuenta."';");
 		//echo "SELECT * FROM ".$nomina." WHERE \"CÉDULA DE IDENTIDAD\"='".$ci."' AND \"NUMERO DE CUENTA DEL TRABAJADOR\"='".$cuenta."';<br />";
 		if (!$result) {
-			//echo "<p>Error ejecutando consulta en bd-pg pre_consulta.</p>";
+		//	//echo "<p>Error ejecutando consulta en bd-pg pre_consulta.</p>";
 			echo '<meta http-equiv="refresh" content="0; url=ingreso.php?error=rne" />';
 			exit;
 		}

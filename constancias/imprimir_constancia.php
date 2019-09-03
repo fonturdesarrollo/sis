@@ -4,7 +4,7 @@ if(!isset($_SESSION['destino'])){
 	header('Location: ingreso.php');
 }else{
 require('../fpdf17/fpdf.php');
-
+/*************** SE HACE LLAMADO A FUNCIONES QUE HACEN IMPRESION DE ENCABEZADO Y PIE DE PAGINA****************/
 class PDF extends FPDF
 {
     function Header(){
@@ -17,6 +17,10 @@ class PDF extends FPDF
         $this->SetFont('Arial','',9,5);$this->Cell(168,5,utf8_decode('La validez de la presente constancia, puede ser consultada a través del correo constancia_de_trabajo@fontur.gob.ve'),0,0,'J');
     }
 }
+/*****************FIN DE FUNCION DE IMPRESION DE ENCABEZADO Y PIE DE PAGINA***********************/
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/******** SE RELIZA ACTUALIZA UN CONTADOR QUE INCREMENTA CUANDO LOS COCEPTOS DE PAGO ESTAN EN CERO O BLANCO***/
+/******** EL VALOR DEL CONTADOR DEFINE EL ALTO DE LAS CELDAS PARA CADA CONCEPTO DE PAGO EN LA IMPRESION ***********/
 $i=0;
 if($_SESSION['diferenciamensual']==''||$_SESSION['diferenciamensual']=='0,00'||$_SESSION['diferenciamensual']=='0'){
 	$i++;
@@ -39,24 +43,32 @@ if($_SESSION['primatransporte']==''||$_SESSION['primatransporte']=='0,00'||$_SES
 if($_SESSION['primaporhijo']==''||$_SESSION['primaporhijo']=='0,00'||$_SESSION['primaporhijo']=='0'){
 	$i++;
 }
-if ($i<6){
+if ($i<6){ 
     $var1=9-$i;
-    $var2=56/$var1;  
+    $var2=56/$var1;  /*** $VAR2 DEFINE EL ALTO DE LA CELDA CUANDO EL TRABAJADOR POSEE DOS CONCEPTOS DE PAGO O MAS**/  
     
 } else {
-    $var2=9.5;
+    $var2=9.5;  /*** $VAR2 DEFINE EL ALTO DE LA CELDA CUANDO EL TRABAJADOR POSEE UNO O DOS CONCEPTOS DE PAGO NADA MAS**/ 
 }
+/***********************************************************************************************************************/
+/*********************FIN DE CONTEO DE CONCEPTOS Y DEFINICION DE ALTO DE CELDA DE IMPRESION DE CONCEPTOS***************/
 // Creación del objeto de la clase heredada
 $pdf = new PDF();
 $pdf->AliasNbPages();
 $pdf->AddPage('P','Letter');
 $pdf->SetMargins(20,20,20);
 $pdf->SetFont('Arial','',11);
+/****************SE DEFINE LA ALTURA A LA QUE SE IMPRIMIRA IMAGEN DE FIRMA DE GERENTE DE RRHH***********/
 if ($i<6){
-    $pdf->Image('../imagenes/FirmaDigitalCarnet.png',68,185,75,45,'PNG');
-} else {
-    $pdf->Image('../imagenes/FirmaDigitalCarnet.png',68,160,75,45,'PNG'); 
+    $pdf->Image('../imagenes/FirmaDigitalCarnet.png',68,190,75,30,'PNG'); /***UBICACION CON TRES CONCEPTOS DE PAGO O MAS***/
+} else if ($i==7) {
+    //$pdf->Image('../imagenes/FirmaDigitalCarnet.png',68,160,75,45,'PNG');
+    $pdf->Image('../imagenes/FirmaDigitalCarnet.png',68,150,75,30,'PNG');  /**UBICACION CON UN CONCEPTO DE PAGO**/
+} else if ($i==6){
+    $pdf->Image('../imagenes/FirmaDigitalCarnet.png',68,162,75,30,'PNG'); /***UBICACION CON DOS CONCEPTOS DE PAGO*/
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********************FIN DE IMPRESION DE FIRMA GERENTE RRHH************************************************/
 //*$pdf->Image('../imagenes/logo_mision.jpg',158,268,30,10,'JPG');*/
 $pdf->Cell(168,30,'',0,1,'C');
 $pdf->Cell(84,5,utf8_decode($_SESSION['correlativo1'])."-".date('Y'),0,0,'L');
@@ -68,24 +80,45 @@ $pdf->Cell(168,5,utf8_decode($_SESSION['destino']),0,1,'L');
 $pdf->SetFont('Arial','',11);
 $pdf->Cell(168,5,'Presente.-',0,1,'L');
 $pdf->Cell(168,5,'',0,1,'C');
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**********SE DEFINE TEXTO QUE ACOMPAÑARA AL CARGO EN FUNCION DE LA NOMINA A LA QUE PERTENECE EL TRABAJADOR*******/
 if ($_SESSION['nomina']=="fijos" or $_SESSION['nomina']=="nuevo_circo"){
-	$texto="quien ocupa el cargo de";
+	$texto="quien ocupa el cargo de"; /**** TEXTO QUE APLICARA PARA PERSONAL FIJO CON CARGO (SE HACE USO LA TABLA NUEVO CIRCO PARA PERSONAL OBRERO)***/
 }else{
-	$texto="quien se desempeña como";
+	$texto="quien se desempeña como"; /***TEXTO PARA PERSONAL CONTRATADO**/
 }
-if ($_SESSION['cargo']!=''){
+/*******************FIN DEFINICION DE TEXTO QUE ACOMPAÑA AL CARGO DEL TRABAJADOR***********************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**** SE INICIA CON LA IMPRESION DEL TEXTO DE LA CONSTANCIA EN FUNCION DE LA NOMINA A LA CUAL PERTENECE EL TRABAJADOR***/
+/*********************** SE DEFINE TEXTO PARA PERSONAL FJO Y CONTRATADO ************************************************/
+if ($_SESSION['nomina']=="fijos" or $_SESSION['nomina']=="accion_centralizada" or $_SESSION['nomina']=="nuevo_circo" or $_SESSION['nomina']=="pasaje_estudiantil"){
     //$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, Gerente (E) de Recursos Humanos de la '.$_SESSION['institucion'].', '.$_SESSION['nacgerente'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' labora en esta Fundación, desde el '.$_SESSION['fechaingreso'].', actualmente cumple funciones de '.$_SESSION['cargo'].', adscrita (o) a la '.strtoupper($_SESSION['gerencia']).', devengando una remuneración mensual de:'),0,'J');
 	//$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, '.$_SESSION['nacgerente'].' Gerente de la Oficina de Gestión Humana de la '.$_SESSION['institucion'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' labora en esta Fundación, desde el '.$_SESSION['fechaingreso'].', '.$texto.' '.$_SESSION['cargo'].', adscrita (o) a la '.strtoupper($_SESSION['gerencia']).', devengando una remuneración mensual de:'),0,'J');
-	$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, '.$_SESSION['nacgerente'].' Gerente (E) de la Oficina de Gestión Humana de la '.$_SESSION['institucion'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' labora en esta Fundación, desde el '.$_SESSION['fechaingreso'].', '.$texto.' '.$_SESSION['cargo'].', adscrita (o) a la '.strtoupper($_SESSION['gerencia']).', devengando una remuneración mensual de:'),0,'J');
-}else {
+	$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, '.$_SESSION['nacgerente'].' Gerente de la Oficina de Gestión Humana de la '.$_SESSION['institucion'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' labora en esta Fundación, desde el '.$_SESSION['fechaingreso'].', '.$texto.' '.$_SESSION['cargo'].', adscrita (o) a la '.strtoupper($_SESSION['gerencia']).', devengando una remuneración mensual de:'),0,'J');
+}else if ($_SESSION['nomina']=="mision_transporte"){ /////TEXTO PARA PERSONAL JUBILADO////////
     //$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, Gerente (E) de Recursos Humanos de la '.$_SESSION['institucion'].', '.$_SESSION['nacgerente'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' labora en esta Fundación, desde el '.$_SESSION['fechaingreso'].', en condición de CONTRATADO, adscrita (o) a la '.strtoupper($_SESSION['gerencia']).', devengando una remuneración mensual de:'),0,'J');
 	//$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, '.$_SESSION['nacgerente'].' Gerente de la Oficina de Gestión Humana de la '.$_SESSION['institucion'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' labora en esta Fundación, desde el '.$_SESSION['fechaingreso'].', en condición de CONTRATADO, adscrita (o) a la '.strtoupper($_SESSION['gerencia']).', devengando una remuneración mensual de:'),0,'J');
-	$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, '.$_SESSION['nacgerente'].' Gerente (E) de la Oficina de Gestión Humana de la '.$_SESSION['institucion'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' labora en esta Fundación, desde el '.$_SESSION['fechaingreso'].', en condición de CONTRATADO, adscrita (o) a la '.strtoupper($_SESSION['gerencia']).', devengando una remuneración mensual de:'),0,'J');
-
+	$pdf->MultiCell(168,5,utf8_decode('Quien suscribe, '.$_SESSION['nacgerente'].' Gerente de la Oficina de Gestión Humana de la '.$_SESSION['institucion'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' es Jubilada (o) de (FONTUR), desde el '.$_SESSION['fechaingreso'].', devengando una asignación mensual de:'),0,'J');
+} else { ///////////TEXTO PARA PERSONAL PENSIONADO///////////
+        $pdf->MultiCell(168,5,utf8_decode('Quien suscribe, '.$_SESSION['nacgerente'].' Gerente de la Oficina de Gestión Humana de la '.$_SESSION['institucion'].', por medio de la presente, hago constar que la (el) ciudadana (o) '.$_SESSION['apellidosynombres'].', titular de la Cédula de Identidad N° '.$_SESSION['ci'].' es Pensionada (o) de (FONTUR), desde el '.$_SESSION['fechaingreso'].', devengando una pensión mensual de:'),0,'J');
 }
+/******************************FIN DE IMPRESION TEXTO DE LA CONSTANCIA***************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $pdf->Cell(168,5,'',0,1,'C');
 //$pdf->Cell(168,5,'',0,1,'C');
-$pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,'Sueldo Base:',1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['sueldobase'],1,1,'R');
+////////////////SE DEFINE EL NOMBRE A MOSTRAR EN EL CONCEPTO DE ASIGNACION O SUELDO ///////////////////////////////////////////
+////////////////EN FUNCION DE LA NOMINA A LA QUE PERTENECE EL TRABAJADOR//////////////////////////////////////////////////////
+if ($_SESSION['nomina']=="fijos" or $_SESSION['nomina']=="accion_centralizada" or $_SESSION['nomina']=="nuevo_circo" or $_SESSION['nomina']=="pasaje_estudiantil"){
+        $pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,'Sueldo Base:',1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['sueldobase'],1,1,'R');
+}
+if ($_SESSION['nomina']=="mision_transporte"){ ////// TEXTO PARA JUBILADOS////////////
+        $pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Jubilación Mensual:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['sueldobase'],1,1,'R');
+}
+if ($_SESSION['nomina']=="peaje"){//////////TEXTO PARA PENSIONADOS/////////////////
+        $pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Pensión Mensual:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['sueldobase'],1,1,'R');
+}
+///*****************FIN DE DEFINICION DE TEXTO PARA CONCEPTO DE ASIGANACION MENSUAL***************************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if($_SESSION['diferenciamensual']!=''&&$_SESSION['diferenciamensual']!='0,00'&&$_SESSION['diferenciamensual']!='0'){
 	$pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Diferencia de Sueldo:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['diferenciamensual'],1,1,'R');
 } 
@@ -106,8 +139,20 @@ if($_SESSION['primatransporte']!=''&&$_SESSION['primatransporte']!='0,00'&&$_SES
 }
 if($_SESSION['primaporhijo']!=''&&$_SESSION['primaporhijo']!='0,00'&&$_SESSION['primaporhijo']!='0'){
 	$pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Prima por Hijo:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['primaporhijo'],1,1,'R');
-} 
-$pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Sueldo Total:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['sueldototal'],1,1,'R');
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*****************DEFINICION DE TEXTO PARA TOTAL DE REMUNERACIONES SEGUN NOMINA***************************************************************/
+if ($_SESSION['nomina']=="fijos" or $_SESSION['nomina']=="accion_centralizada" or $_SESSION['nomina']=="nuevo_circo" or $_SESSION['nomina']=="pasaje_estudiantil"){
+        $pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Sueldo Total:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['sueldototal'],1,1,'R');
+}
+if ($_SESSION['nomina']=="mision_transporte"){ /*****TEXTO JUBILADOS*******/
+        $pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Total Jubilación:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['sueldototal'],1,1,'R');
+}
+if ($_SESSION['nomina']=="peaje"){  /****TEXTO PENSIONADOS*******/
+        $pdf->SetFont('Arial','B',11);$pdf->Cell(126,$var2,utf8_decode('Total Pensión:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['sueldototal'],1,1,'R');
+}
+/*********************FIN DE DEFINICION TEXTO PARA TOTALES SEGUN NOMINA*************************************************************************/
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $pdf->Cell(168,5,'',0,1,'C');
 $pdf->SetFont('Arial','B',11);$pdf->Cell(168,7,utf8_decode('Beneficio Social de Caracter  No Remunerativo'),0,1,'L');
 $pdf->Cell(126,$var2,utf8_decode('Cestaticket Socialista:'),1,0,'L');$pdf->SetFont('Arial','',11);$pdf->Cell(42,$var2,$_SESSION['bonoalimentacion'],1,1,'R');
@@ -118,10 +163,11 @@ $pdf->Cell(168,8,'',0,1,'C');
 $pdf->Cell(168,8,'',0,1,'C');
 $pdf->SetFont('Arial','B',11);
 $pdf->Cell(168,5,utf8_decode($_SESSION['nyagerente']),0,1,'C');
-$pdf->Cell(168,5,utf8_decode('GERENTE (E) DE LA OFICINA DE GESTIÓN HUMANA'),0,1,'C');
+$pdf->Cell(168,5,utf8_decode('GERENTE DE LA OFICINA DE GESTIÓN HUMANA'),0,1,'C');
 $pdf->SetFont('Arial','',8);
-$pdf->Cell(168,3,utf8_decode('Designada mediante Punto de Cuenta N° 313 de fecha quince (15) de octubre de 2018'),0,1,'C');
-$pdf->Cell(168,3,utf8_decode('y Oficio de Notificación N° PRE/O/498 de fecha quince (15) de octubre de 2018.'),0,1,'C');
+$pdf->Cell(168,3,utf8_decode('Designada mediante Punto de Cuenta N° 323 de fecha veinte (20) de agosto de 2019'),0,1,'C');
+//$pdf->Cell(168,3,utf8_decode('y Oficio de Notificación N° PRE/O/498 de fecha quince (15) de octubre de 2018.'),0,1,'C');
+$pdf->Cell(168,3,utf8_decode(''),0,1,'C');
 $pdf->SetFont('Arial','',11);
 $pdf->Cell(56,5,"LC/EP.",0,0,'L');$pdf->SetFont('Arial','B',8);$pdf->Cell(56,5,utf8_decode($_SESSION['lema']),0,0,'C');$pdf->Cell(56,5,'',0,1,'R');
 $pdf->Cell(168,5,'',0,1,'C');
